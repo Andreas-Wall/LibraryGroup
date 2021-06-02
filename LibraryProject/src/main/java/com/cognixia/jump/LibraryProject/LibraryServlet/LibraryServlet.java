@@ -55,15 +55,16 @@ public class LibraryServlet extends HttpServlet {
 	}
 	
 
-	public void destroy() {
-		// TODO Auto-generated method stub
-		try {
-			ConnectionManager.getConnection().close();
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
+	
+	//lists
+	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		List<Book> allBooks = LibraryDAO.getAllBooks();
+		System.out.println("called, allBooks = " + allBooks);
+		request.setAttribute("allBooks", allBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		dispatcher.forward(request, response);
 	}
-
 	
 	//insert
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
@@ -79,6 +80,38 @@ public class LibraryServlet extends HttpServlet {
 			
 			response.sendRedirect("list");
 			
+	}
+	
+	//delete
+	private void deleteBook(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		libraryDAO.deleteBook(isbn);
+		response.sendRedirect("list");
+	}
+	
+	//edit
+	private void editBookInfo (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		String title = request.getParameter("title");
+		String descr = request.getParameter("descr");
+		boolean rented = Boolean.parseBoolean(request.getParameter("rented")) ;
+		Date added_to_library = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("added_to_library"));
+		Library book = new Library(isbn, title, descr, rented, added_to_library);
+		libraryDAO.updateBook(book);
+		response.sendRedirect("list");
+	}
+	
+	
+	
+	public void destroy() {
+		// TODO Auto-generated method stub
+		try {
+			ConnectionManager.getConnection().close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
