@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cognixia.jump.LibraryProject.LibraryDAO.LibraryDAO;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
+import com.cognixia.jump.model.Product;
 
 
 public class LibraryServlet extends HttpServlet {
@@ -33,7 +34,7 @@ public class LibraryServlet extends HttpServlet {
 			listBooks(request, response);
 			break;
 		case "/insert":
-			addNewBooks(request, response);
+			addNewBook(request, response);
 			break;
 		case "/edit":
 			editBookInfo(request, response);
@@ -63,6 +64,22 @@ public class LibraryServlet extends HttpServlet {
 		}
 	}
 
+	
+	//insert
+	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			
+			String title = request.getParameter("title");
+			int isbn = Integer.parseInt( request.getParameter("isbn") );
+			String description = request.getParameter("description");
+			
+			Library library = new Library(0, title, isbn, description);
+			
+			libraryDAO.addBook(library);
+			
+			response.sendRedirect("list");
+			
+	}
 
 
 }
