@@ -21,13 +21,11 @@ public class Library
 	private Date added_to_library;
 	
 	//Constructor for Patron
-	public Library(int patron_id, String first_name, String last_name, String username, String password, boolean account_frozen) {
+	public Library(int patron_id, String first_name, String last_name, boolean account_frozen) {
 		super();
 		this.patron_id = patron_id;
 		this.first_name = first_name;
 		this.last_name = last_name;
-		this.username = username;
-		this.password = password;
 		this.account_frozen = account_frozen;
 	}
 	
