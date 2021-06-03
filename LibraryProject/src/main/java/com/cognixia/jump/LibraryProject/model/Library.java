@@ -1,5 +1,4 @@
 package com.cognixia.jump.LibraryProject.model;
-
 import java.sql.Date;
 
 public class Library 
