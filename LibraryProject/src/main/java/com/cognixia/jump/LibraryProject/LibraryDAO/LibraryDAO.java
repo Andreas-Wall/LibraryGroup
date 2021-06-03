@@ -9,6 +9,7 @@ import java.util.List;
 import java.sql.Date;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
 import com.cognixia.jump.LibraryProject.model.Library;
+
 public class LibraryDAO {
 	public int patronID, LibrarianID;
 	public static final Connection conn = ConnectionManager.getConnection();
@@ -39,11 +40,13 @@ public class LibraryDAO {
 			String pass = Library.getPassword();
 			pstmt.setString(1, user);
 			pstmt.setString(2, pass);
+			boolean check = false;
 			while(rs.next()) {
 				String userName = rs.getString("username");
 				String paswword = rs.getString("password");
 				if(user.equals(userName) & pass.equals(paswword)) {
-					patronID = rs.getInt("patron_ID");}//end if
+					patronID = rs.getInt("patron_ID");
+					check = true;}//end if
 				}//end while
 		} catch(SQLException e) {e.printStackTrace();}//end try/catch
 		return patronID;
@@ -55,18 +58,64 @@ public class LibraryDAO {
 			String pass = Library.getPassword();
 			pstmt.setString(1, user);
 			pstmt.setString(2, pass);
+			boolean check = false;
 			while(rs.next()) {
 				String userName = rs.getString("username");
 				String paswword = rs.getString("password");
 				if(user.equals(userName) & pass.equals(paswword)) {
-					patronID = rs.getInt("librarian_id");}//end if
+					patronID = rs.getInt("librarian_id");
+					check = true;}//end if
 				}//end while
 		} catch(SQLException e) {e.printStackTrace();}//end try/catch
 		return patronID;
 	}//end librarianLogin
-	public boolean patronLoginUpdate() {
-		return false;
-	}
+	public boolean patronLoginUpdate(Library Library) {
+		try (PreparedStatement pstmt = conn.prepareStatement(PATRON_LOGIN_UPDATE)) {
+			pstmt.setString(1, Library.getFirst_name());
+			pstmt.setString(2, Library.getLast_name());
+			pstmt.setString(3, Library.getUsername());
+			pstmt.setString(4, Library.getPassword());
+			pstmt.setInt(5, Library.getPatron_id());
+			// at least one row updated
+			if (pstmt.executeUpdate() > 0) {
+				return true;}
+		} catch (SQLException e) {e.printStackTrace();}//end try/catch
+		return false;}
+	//end patronLoginUpdate
+	public boolean librarianLoginUpdate(Library Library) {
+		try (PreparedStatement pstmt = conn.prepareStatement(LIBRARIAN_LOGIN_UPDATE)) {
+			pstmt.setInt(1, Library.getPatron_id());
+			// at least one row updated
+			if (pstmt.executeUpdate() > 0) {
+				return true;}
+		} catch (SQLException e) {e.printStackTrace();}//end try/catch
+		return false;}
+	//end librarianLoginUpdate
+	//methods used to look at patrons and unfreeze them.
+	public List<Library> getAllPatrons() {
+		List<Library> allPatrons = new ArrayList<Library>();
+		try(PreparedStatement pstmt = conn.prepareStatement(PATRON_LIST);
+				ResultSet rs = pstmt.executeQuery() ) {
+			while(rs.next()) {
+				int patron_id = rs.getInt("patron_id");
+				String first_name = rs.getString("first_name");
+				String last_name = rs.getString("last_name");
+				boolean account_frozen = rs.getBoolean("account_frozen");
+				allPatrons.add(new Library(patron_id, first_name, last_name, account_frozen));}//end while
+		} catch(SQLException e) {e.printStackTrace();}//end try/catch
+		return allPatrons;
+	}//end getAllPatrons
+	public boolean patron_Unfreeze(Library Library) {
+		try (PreparedStatement pstmt = conn.prepareStatement(PATRON_UNFREEZE)) {
+			pstmt.setString(1, Library.getUsername());
+			pstmt.setString(2, Library.getPassword());
+			pstmt.setInt(3, Library.getPatron_id());
+			// at least one row updated
+			if (pstmt.executeUpdate() > 0) {
+				return true;}
+		} catch (SQLException e) {e.printStackTrace();}//end try/catch
+		return false;}
+	//end patron_Unfreeze
 	//All book methods
 	public List<Library> getAllBooks() {
 		List<Library> allBooks = new ArrayList<Library>();
