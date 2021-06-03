@@ -1,5 +1,7 @@
 package com.cognixia.jump.LibraryProject.model;
-import java.util.Date;
+
+import java.sql.Date;
+
 public class Library 
 {
 	private int patron_id; //Patron and Book_Checkout
@@ -18,6 +20,7 @@ public class Library
 	private String descr;
 	private boolean rented;
 	private Date added_to_library;
+	
 	//Constructor for Patron
 	public Library(int patron_id, String first_name, String last_name, String username, String password, boolean account_frozen) {
 		super();
@@ -28,6 +31,7 @@ public class Library
 		this.password = password;
 		this.account_frozen = account_frozen;
 	}
+	
 	//Constructor for Librarian
 	public Library(String username, String password, int librarian_id) {
 		super();
@@ -35,6 +39,7 @@ public class Library
 		this.password = password;
 		this.librarian_id = librarian_id;
 	}
+	
 	//Constructor for Book_Checkout
 	public Library(int patron_id, int checkout_id, String isbn, Date checkedout, Date due_date, Date returned) {
 		super();
@@ -45,6 +50,7 @@ public class Library
 		this.due_date = due_date;
 		this.returned = returned;
 	}
+	
 	//Constructor for Book
 	public Library(String isbn, String title, String descr, boolean rented, Date added_to_library) {
 		super();
@@ -54,6 +60,7 @@ public class Library
 		this.rented = rented;
 		this.added_to_library = added_to_library;
 	}
+	
 	public int getPatron_id() {
 		return patron_id;
 	}
