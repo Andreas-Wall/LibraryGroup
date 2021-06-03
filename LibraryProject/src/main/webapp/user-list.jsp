@@ -1,4 +1,4 @@
-<%@ include file= "librarianHeader.jsp" %>
+<%@ include file= "header.jsp" %>
 
 <div class="container">
 
@@ -29,13 +29,13 @@
 					<c:out value="${ patron.first_name }" />
 				</td>
 				<td>
-					<c:out value="${ user.last_name }" />
+					<c:out value="${ patron.last_name }" />
 				</td>
 				<td>
 					<c:out value="${ patron.username }" />
 				</td>
 				<td>
-					<c:out value="${ user.account_frozen }" />
+					<c:out value="${ patron.account_frozen }" />
 				</td>
 				<td>
 					<a href="edit?id=<c:out value='${ user.id }' />">
