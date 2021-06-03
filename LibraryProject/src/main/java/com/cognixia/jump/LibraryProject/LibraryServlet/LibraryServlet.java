@@ -1,8 +1,14 @@
 package com.cognixia.jump.LibraryProject.LibraryServlet;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cognixia.jump.LibraryProject.LibraryDAO.LibraryDAO;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
+
+import com.cognixia.jump.LibraryProject.model.Library;
+
 
 
 
@@ -34,7 +43,15 @@ public class LibraryServlet extends HttpServlet {
 			listBooks(request, response);
 			break;
 		case "/insert":
-			addNewBook(request, response);
+			try {
+				addNewBook(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			break;
 		case "/edit":
 			editBookInfo(request, response);
@@ -59,7 +76,7 @@ public class LibraryServlet extends HttpServlet {
 	//lists
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		List<Book> allBooks = LibraryDAO.getAllBooks();
+		List<Library> allBooks = libraryDAO.getAllBooks();
 		System.out.println("called, allBooks = " + allBooks);
 		request.setAttribute("allBooks", allBooks);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
@@ -68,17 +85,18 @@ public class LibraryServlet extends HttpServlet {
 	
 	//insert
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, ParseException {
 			
-			String title = request.getParameter("title");
-			int isbn = Integer.parseInt( request.getParameter("isbn") );
-			String description = request.getParameter("description");
+		String isbn = request.getParameter("isbn");
+		String title = request.getParameter("title");
+		String descr = request.getParameter("descr");
+		boolean rented = Boolean.parseBoolean(request.getParameter("rented")) ;
+		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
+		Library book = new Library(isbn, title, descr, rented, added_to_library);
 			
-			Library library = new Library(0, title, isbn, description);
+		libraryDAO.addBook(book);
 			
-			libraryDAO.addBook(library);
-			
-			response.sendRedirect("list");
+		response.sendRedirect("list");
 			
 	}
 	
@@ -97,7 +115,8 @@ public class LibraryServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String descr = request.getParameter("descr");
 		boolean rented = Boolean.parseBoolean(request.getParameter("rented")) ;
-		Date added_to_library = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("added_to_library"));
+		//Date added_to_library = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("added_to_library"));
+		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 		libraryDAO.updateBook(book);
 		response.sendRedirect("list");
