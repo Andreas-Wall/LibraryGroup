@@ -2,37 +2,44 @@
 
 <div class="container">
 
-	<h1>Product List</h1>
+	<h1>Book List</h1>
 	<br>
 	<br>
-	
+
 	<table class="table table-striped">
 		
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Item</th>
-				<th>Quantity</th>
+
+				<th>Title</th>
 				<th>Description</th>
+				<th>Rented</th>
+				<th>Added_to_library</th>
+
 				<th>Action</th>
 			</tr>
 		</thead>
 		
 		<tbody>
+
+			<c:forEach var="Book" items="${allBooks}">
 			
-			<c:forEach var="product" items="${allProducts}">
-			
 				<td>
-					<c:out value="${ product.id }" />
+					<c:out value="${ Book.isbn }" />
 				</td>
 				<td>
-					<c:out value="${ product.item }" />
+					<c:out value="${ Book.title }" />
 				</td>
 				<td>
-					<c:out value="${ product.qty }" />
+					<c:out value="${ Book.descr }" />
 				</td>
 				<td>
-					<c:out value="${ product.description }" />
+					<c:out value="${ Book.rented }" />
+				</td>
+				<td>
+					<c:out value="${ Book.added_to_library }" />
+
 				</td>
 				<td>
 					<a href="edit?id=<c:out value='${ product.id }' />">
@@ -42,6 +49,9 @@
 						<button class="btn btn-danger">Delete</button>
 					</a>
 				</td>
+
+				<br>
+
 			
 			</c:forEach>
 		
