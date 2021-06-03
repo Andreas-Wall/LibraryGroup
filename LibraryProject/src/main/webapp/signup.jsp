@@ -1,5 +1,6 @@
 <%@ include file= "header.jsp" %>
 
+
 <div class="container">
 
 	<h1>Sign up for an account</h1>

@@ -8,7 +8,7 @@ public class ConnectionManager {
 	
 	private static Connection connection = null;
 	
-	private static final String URL = "jdbc:mysql://localhost:3306/Library?serverTimezone=UTC";
+	private static final String URL = "jdbc:mysql://localhost:3306/Library";
 //	private static final String URL = "jdbc:mysql://localhost:3306/Library";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "root";
@@ -19,10 +19,13 @@ public class ConnectionManager {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			
+			
 		} catch(SQLException e) {
 			e.printStackTrace();
+			System.out.println("help sql");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			System.out.println("help class");
 		}
 		
 	}
@@ -31,6 +34,7 @@ public class ConnectionManager {
 		
 		if(connection == null) {
 			makeConnection();
+			System.out.println("Connect");
 		}
 		
 		return connection;
