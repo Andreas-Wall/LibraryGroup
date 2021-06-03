@@ -104,7 +104,7 @@ public class LibraryServlet extends HttpServlet {
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
-		libraryDAO.deleteBook(isbn);
+		//libraryDAO.deleteBook(isbn);
 		response.sendRedirect("list");
 	}
 	
