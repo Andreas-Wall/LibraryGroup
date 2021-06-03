@@ -160,9 +160,9 @@ public class LibraryDAO {
 		return checkOutBooks;
 	}//end getCheckOutBooks
 	//will set the book to being checked out.
-	public boolean checkOutBook(Library Library) {
+	public boolean checkOutBook(String isbn) {
 		try (PreparedStatement pstmt = conn.prepareStatement(CHECKOUT_BOOK)) {
-			pstmt.setString(1, Library.getIsbn());
+			pstmt.setString(1, isbn);
 			// at least one row updated
 			if (pstmt.executeUpdate() > 0) {
 				return true;}

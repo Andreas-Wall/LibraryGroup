@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +22,7 @@ import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
 import com.cognixia.jump.LibraryProject.model.Library;
 
 
-
-
+@WebServlet("/")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -56,9 +56,35 @@ public class LibraryServlet extends HttpServlet {
 		case "/edit":
 			editBookInfo(request, response);
 			break;
+<<<<<<< Updated upstream
 		case "/delete":
 			deleteBook(request, response);
+=======
+		case "/bookCheckout":
+			bookCheckout(request, response);
 			break;
+		case "/checkedOut":
+			checkedOutBooks(request, response);
+			break;
+		case "/login":
+			login(request, response);
+>>>>>>> Stashed changes
+			break;
+//		case "/returnBooks":
+//			returnBooks(request, response);
+//			break;
+//		case "/listUsers":
+//			listUsers(request, response);
+//			break;
+//		case "/addUser":
+//			addNewUser(request, response);
+//			break;
+//		case "/editUserInfo":
+//			editUserInfo(request, response);
+//			break;
+//		case "/editLibrarianInfo":
+//			editLibrarianInfo(request, response);
+//			break;
 		default:
 			response.sendRedirect("index.jsp");
 			break;
@@ -79,7 +105,12 @@ public class LibraryServlet extends HttpServlet {
 		List<Library> allBooks = libraryDAO.getAllBooks();
 		System.out.println("called, allBooks = " + allBooks);
 		request.setAttribute("allBooks", allBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
+		dispatcher.forward(request, response);
+	}
+	private void login(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 	}
 	
@@ -119,6 +150,16 @@ public class LibraryServlet extends HttpServlet {
 		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 		libraryDAO.updateBook(book);
+<<<<<<< Updated upstream
+=======
+		response.sendRedirect("list");
+	}
+
+	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		libraryDAO.checkOutBook(isbn);
+>>>>>>> Stashed changes
 		response.sendRedirect("list");
 	}
 	
