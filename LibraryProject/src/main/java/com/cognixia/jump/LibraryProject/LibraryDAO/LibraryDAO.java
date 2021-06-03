@@ -30,6 +30,9 @@ public class LibraryDAO {
 	private static final String RECORD_CHECKOUT = "insert into Book_Checkout (patron_id, isbn, checkout, due_date) values (?,?,?,?)";
 	private static final String ADD_BOOK = "insert into Book (isbn, title, descr, added_to_library) values (?,?,?,?)";
 	private static final String UPDATE_BOOK = "update Book set isbn = ?, title = ?, descr = ?, rented = ?, added_to_library = ? where isbn = ?";
+	
+	
+	//All book methods
 	public List<Library> getAllBooks() {
 		List<Library> allBooks = new ArrayList<Library>();
 		try(PreparedStatement pstmt = conn.prepareStatement(SELECT_BOOKS);
@@ -44,19 +47,34 @@ public class LibraryDAO {
 		} catch(SQLException e) {e.printStackTrace();}//end try/catch
 		return allBooks;
 	}//end getallBooks
+	public List<Library> getCheckOutBooks(){
+		List<Library> checkOutBooks = new ArrayList<Library>();
+		try(PreparedStatement pstmt = conn.prepareStatement(SELECT_BOOKS);
+				ResultSet rs = pstmt.executeQuery() ) {
+			while(rs.next()) {
+				int patron_id = rs.getInt("patron_id");
+				int checkout_id = rs.getInt("checkout_id");
+				String isbn = rs.getString("isbn");
+				Date checkedout = rs.getDate("checkedout");
+				Date due_date = rs.getDate("due_date");
+				Date returned = rs.getDate("returned");
+				checkOutBooks.add(new Library(patron_id, checkout_id, isbn, checkedout, due_date, returned));}//end while
+		} catch(SQLException e) {e.printStackTrace();}//end try/catch
+		return checkOutBooks;
+	}//end getCheckOutBooks
 	public boolean addBook(Library Library) {
 		try(PreparedStatement pstmt = conn.prepareStatement(ADD_BOOK)) {
 			pstmt.setString(1, Library.getIsbn());
 			pstmt.setString(2, Library.getTitle());
 			pstmt.setString(3, Library.getDescr());
-			pstmt.setDate(4, Library.getAdded_to_library());
+			pstmt.setDate(4, (Date) Library.getAdded_to_library());
 			// at least one row added
 			if(pstmt.executeUpdate() > 0) {
-				return true;
-			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
+				return true;}
+		} catch(SQLException e) {e.printStackTrace();}
 		return false;
-	}
+	}//end addBook
+	
+	
+	
 }//end of program
