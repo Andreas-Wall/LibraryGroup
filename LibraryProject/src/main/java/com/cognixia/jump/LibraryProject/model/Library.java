@@ -1,5 +1,5 @@
 package com.cognixia.jump.LibraryProject.model;
-import java.util.Date;
+import java.sql.Date;
 public class Library 
 {
 	private int patron_id; //Patron and Book_Checkout

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cognixia.jump.LibraryProject.LibraryDAO.LibraryDAO;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
-import com.cognixia.jump.model.Product;
+
 
 
 public class LibraryServlet extends HttpServlet {
