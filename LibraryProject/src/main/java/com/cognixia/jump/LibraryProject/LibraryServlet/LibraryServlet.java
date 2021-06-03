@@ -43,15 +43,7 @@ public class LibraryServlet extends HttpServlet {
 			listBooks(request, response);
 			break;
 		case "/insert":
-			try {
 				addNewBook(request, response);
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
 			break;
 		case "/edit":
 			editBookInfo(request, response);
@@ -85,7 +77,7 @@ public class LibraryServlet extends HttpServlet {
 	
 	//insert
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ParseException {
+			throws ServletException, IOException {
 			
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
