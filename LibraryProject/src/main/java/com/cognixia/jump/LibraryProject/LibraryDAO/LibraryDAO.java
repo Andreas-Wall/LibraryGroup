@@ -10,7 +10,7 @@ import java.sql.Date;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
 import com.cognixia.jump.LibraryProject.model.Library;
 public class LibraryDAO {
-	public String patronID, LibrarianID;
+	public int patronID, LibrarianID;
 	public static final Connection conn = ConnectionManager.getConnection();
 	//login sql statements
 	private static final String PARTON_LOGIN = "select * from patron where username = ? and password = ?";
@@ -31,7 +31,42 @@ public class LibraryDAO {
 	private static final String ADD_BOOK = "insert into Book (isbn, title, descr, added_to_library) values (?,?,?,?)";
 	private static final String UPDATE_BOOK = "update Book set isbn = ?, title = ?, descr = ?, rented = ?, added_to_library = ? where isbn = ?";
 	
-	
+	//login methods used by both groups
+	public int patronLogin(Library Library) {
+		try(PreparedStatement pstmt = conn.prepareStatement(PARTON_LOGIN);
+				ResultSet rs = pstmt.executeQuery()){
+			String user = Library.getUsername();
+			String pass = Library.getPassword();
+			pstmt.setString(1, user);
+			pstmt.setString(2, pass);
+			while(rs.next()) {
+				String userName = rs.getString("username");
+				String paswword = rs.getString("password");
+				if(user.equals(userName) & pass.equals(paswword)) {
+					patronID = rs.getInt("patron_ID");}//end if
+				}//end while
+		} catch(SQLException e) {e.printStackTrace();}//end try/catch
+		return patronID;
+	}//end patronLogin
+	public int librarianLogin(Library Library) {
+		try(PreparedStatement pstmt = conn.prepareStatement(LIBRARIAN_LOGIN);
+				ResultSet rs = pstmt.executeQuery()){
+			String user = Library.getUsername();
+			String pass = Library.getPassword();
+			pstmt.setString(1, user);
+			pstmt.setString(2, pass);
+			while(rs.next()) {
+				String userName = rs.getString("username");
+				String paswword = rs.getString("password");
+				if(user.equals(userName) & pass.equals(paswword)) {
+					patronID = rs.getInt("librarian_id");}//end if
+				}//end while
+		} catch(SQLException e) {e.printStackTrace();}//end try/catch
+		return patronID;
+	}//end librarianLogin
+	public boolean patronLoginUpdate() {
+		return false;
+	}
 	//All book methods
 	public List<Library> getAllBooks() {
 		List<Library> allBooks = new ArrayList<Library>();
