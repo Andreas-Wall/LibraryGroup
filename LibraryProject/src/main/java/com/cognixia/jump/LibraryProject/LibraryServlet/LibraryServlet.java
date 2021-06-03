@@ -39,17 +39,45 @@ public class LibraryServlet extends HttpServlet {
 		String action  = request.getServletPath();
 		
 		switch(action) {
-		case "/list":
+		//Patron
+		case "/listBooks":
 			listBooks(request, response);
 			break;
-		case "/insert":
-				addNewBook(request, response);
+		//Librarian
+		case "/addBook":
+			addNewBook(request, response);
 			break;
-		case "/edit":
+		//Librarian
+		case "/editBook":
 			editBookInfo(request, response);
 			break;
-		case "/delete":
-			deleteBook(request, response);
+		//Patron
+		case "/bookCheckout":
+			bookCheckout(request, response);
+			break;
+		//Patron
+		case "/checkedOut":
+			checkedOutBooks(request, response);
+			break;
+		//Patron
+		case "/returnBooks":
+			returnBooks(request, response);
+			break;
+		//Librarian	
+		case "/listUsers":
+			listUsers(request, response);
+			break;
+		//Patron
+		case "/addUser":
+			addNewUser(request, response);
+			break;
+		//Patron
+		case "/editUserInfo":
+			editUserInfo(request, response);
+			break;
+		//Librarian
+		case "/editLibrarianInfo":
+			editLibrarianInfo(request, response);
 			break;
 		default:
 			response.sendRedirect("index.jsp");
@@ -65,17 +93,25 @@ public class LibraryServlet extends HttpServlet {
 	
 
 	
-	//lists
+	//Books
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		List<Library> allBooks = libraryDAO.getAllBooks();
 		System.out.println("called, allBooks = " + allBooks);
 		request.setAttribute("allBooks", allBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
 		dispatcher.forward(request, response);
 	}
 	
-	//insert
+	private void checkedOutBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		List<Library> checkedOutBooks = libraryDAO.getAllCheckedOutBooks();
+		System.out.println("called, checkedOutBooks = " + checkedOutBooks);
+		request.setAttribute("checkedOutBooks", checkedOutBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
+		dispatcher.forward(request, response);
+	}
+	
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 			
@@ -88,19 +124,9 @@ public class LibraryServlet extends HttpServlet {
 			
 		libraryDAO.addBook(book);
 			
-		response.sendRedirect("list");
-			
+		response.sendRedirect("listBooks");		
 	}
 	
-	//delete
-	private void deleteBook(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		String isbn = request.getParameter("isbn");
-		//libraryDAO.deleteBook(isbn);
-		response.sendRedirect("list");
-	}
-	
-	//edit
 	private void editBookInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
@@ -110,10 +136,72 @@ public class LibraryServlet extends HttpServlet {
 		//Date added_to_library = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("added_to_library"));
 		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
-		libraryDAO.updateBook(book);
-		response.sendRedirect("list");
+		libraryDAO.editBookInfo(book);
+		response.sendRedirect("listBooks");
+	}
+
+	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		libraryDAO.bookCheckout(isbn);
+		response.sendRedirect("listBooks");
 	}
 	
+	private void returnBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		libraryDAO.returnBooks(isbn);
+		response.sendRedirect("listBooks");
+	}
+	
+	
+	//User & Librarian
+	
+	private void listUsers(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		List<Library> allUsers = libraryDAO.getAllUsers();
+		System.out.println("called, allUsers = " + allUsers);
+		request.setAttribute("allUsers", allUsers);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("librarian.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void addNewUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		Library user = new Library(firstName, lastName, username, password);
+			
+		libraryDAO.addUser(user);
+			
+		response.sendRedirect("listBooks");		
+	}
+	
+	private void editUserInfo (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int patronId = Integer.parseInt(request.getParameter("patron_ID"));
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		Library user = new Library(patronId,firstName, lastName, username, password);
+		libraryDAO.editUser(user);
+		response.sendRedirect("listBooks");
+	}
+	
+	private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int librarianId = Integer.parseInt(request.getParameter("librarian_id"));
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		Library librarian = new Library(librarianId, username, password);
+		libraryDAO.editLibrarian(librarianId);
+		response.sendRedirect("listUsers");
+	}
 	
 	
 	public void destroy() {
