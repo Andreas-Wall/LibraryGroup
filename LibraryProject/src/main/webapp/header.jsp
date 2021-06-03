@@ -46,7 +46,7 @@
 	</header>
 </c:if>
 
-<c:if test = "${ patron == null }" >
+<c:if test = "${ librarian != null }" >
 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -77,4 +77,11 @@
 		</nav>
 	</header>
 	
+</c:if>
+<c:if test = "${ patron == null }">
+	<p>Please Sign up or Log in</p>
+</c:if>
+
+<c:if test = "${ librarian == null }">
+	<p>Please Sign up or Log in</p>
 </c:if>
