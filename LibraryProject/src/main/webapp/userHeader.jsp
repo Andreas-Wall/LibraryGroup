@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Library</title>
+<title>User Page</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
@@ -15,7 +15,7 @@
 
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<a class="navbar-brand" href="<%= request.getContextPath() %>/">Library</a>
+  		<a class="navbar-brand" href="<%= request.getContextPath() %>/">User HomePage</a>
   		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
   		</button>
@@ -24,11 +24,18 @@
 		    <ul class="navbar-nav">
 		    
 		      	<li class="nav-item">
-		        	<a class="nav-link" href="<%= request.getContextPath() %>/list">View</a>
+		        	<a class="nav-link" href="<%= request.getContextPath() %>/list">Checkout</a>
 		      	</li>
 		      	<li class="nav-item">
-		        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Add</a>
+		        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Return</a>
 		      	</li>
+		      	<li class="nav-item">
+		        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Checked Out Books</a>
+		      	</li>
+		      	<li class="nav-item">
+		        	<a class="nav-link" href="<%= request.getContextPath() %>/list">List of Books</a>
+		      	</li>
+		      	
 		      	
 		    </ul>
 		    
