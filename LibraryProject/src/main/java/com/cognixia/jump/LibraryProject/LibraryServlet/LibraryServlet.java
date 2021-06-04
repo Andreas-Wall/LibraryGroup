@@ -21,14 +21,6 @@ import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
 
 import com.cognixia.jump.LibraryProject.model.Library;
 
-
-<<<<<<< Updated upstream
-=======
-
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 @WebServlet("/")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +38,7 @@ public class LibraryServlet extends HttpServlet {
 		String action  = request.getServletPath();
 		
 		switch(action) {
-		case "/list":
+		case "/listBooks":
 			listBooks(request, response);
 			break;
 		case "/insert":
@@ -63,10 +55,6 @@ public class LibraryServlet extends HttpServlet {
 		case "/edit":
 			editBookInfo(request, response);
 			break;
-<<<<<<< Updated upstream
-		case "/delete":
-			deleteBook(request, response);
-=======
 		case "/bookCheckout":
 			bookCheckout(request, response);
 			break;
@@ -75,26 +63,22 @@ public class LibraryServlet extends HttpServlet {
 			break;
 		case "/login":
 			login(request, response);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
 			break;
-=======
->>>>>>> Stashed changes
-//		case "/returnBooks":
-//			returnBooks(request, response);
-//			break;
-//		case "/listUsers":
-//			listUsers(request, response);
-//			break;
-//		case "/addUser":
-//			addNewUser(request, response);
-//			break;
-//		case "/editUserInfo":
-//			editUserInfo(request, response);
-//			break;
-//		case "/editLibrarianInfo":
-//			editLibrarianInfo(request, response);
-//			break;
+		case "/returnBooks":
+			returnBooks(request, response);
+			break;
+		case "/listUsers":
+			listUsers(request, response);
+			break;
+		case "/addUser":
+			addNewUser(request, response);
+			break;
+		case "/editUserInfo":
+			editUserInfo(request, response);
+			break;
+		case "/editLibrarianInfo":
+			editLibrarianInfo(request, response);
+			break;
 		default:
 			response.sendRedirect("index.jsp");
 			break;
@@ -109,7 +93,7 @@ public class LibraryServlet extends HttpServlet {
 	
 
 	
-	//lists
+	//Books
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		List<Library> allBooks = libraryDAO.getAllBooks();
@@ -119,33 +103,24 @@ public class LibraryServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) 
-<<<<<<< Updated upstream
-=======
 			throws ServletException, IOException {
-<<<<<<< Updated upstream
 		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 	}
 	
 	private void checkedOutBooks(HttpServletRequest request, HttpServletResponse response) 
->>>>>>> Stashed changes
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-		dispatcher.forward(request, response);
-	}
-=======
 		List<Library> checkedOutBooks = libraryDAO.getCheckOutBooks();
 		System.out.println("called, checkedOutBooks = " + checkedOutBooks);
 		request.setAttribute("checkedOutBooks", checkedOutBooks);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
-		dispatcher.forward(request, response);
-	}
-
->>>>>>> Stashed changes
+    dispatcher.forward(request, response);
+  }
 	
-	//insert
+  
+  
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, ParseException {
+			throws ServletException, IOException {
 			
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
@@ -155,20 +130,12 @@ public class LibraryServlet extends HttpServlet {
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 			
 		libraryDAO.addBook(book);
-			
-		response.sendRedirect("list");
-			
+		
+		response.sendRedirect("listBooks");		
+
 	}
 	
-	//delete
-	private void deleteBook(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		String isbn = request.getParameter("isbn");
-		//libraryDAO.deleteBook(isbn);
-		response.sendRedirect("list");
-	}
-	
-	//edit
+  
 	private void editBookInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
@@ -179,36 +146,14 @@ public class LibraryServlet extends HttpServlet {
 		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 		libraryDAO.updateBook(book);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-		response.sendRedirect("list");
-=======
-
 		response.sendRedirect("listBooks");
-
->>>>>>> Stashed changes
 	}
 
 	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
 		libraryDAO.checkOutBook(isbn);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-		response.sendRedirect("list");
-	}
-	
-=======
-
 		response.sendRedirect("listBooks");
-
 	}
 	
 	private void returnBooks(HttpServletRequest request, HttpServletResponse response) 
@@ -256,8 +201,8 @@ public class LibraryServlet extends HttpServlet {
 		libraryDAO.patronLoginUpdate(user);
 		response.sendRedirect("listBooks");
 	}
-	
-	private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
+  
+  private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int librarianId = Integer.parseInt(request.getParameter("librarian_id"));
 		String username = request.getParameter("username");
@@ -266,7 +211,6 @@ public class LibraryServlet extends HttpServlet {
 		libraryDAO.librarianLoginUpdate(librarian);
 		response.sendRedirect("listUsers");
 	}
->>>>>>> Stashed changes
 	
 	
 	public void destroy() {

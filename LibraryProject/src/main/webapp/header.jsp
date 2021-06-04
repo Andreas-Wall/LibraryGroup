@@ -14,6 +14,7 @@
 <body>
 
 
+
 <c:if test = "${ patron == null }" > 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,6 +79,7 @@
 	</header>
 	
 </c:if>
+
 <c:if test = "${ patron == null && librarian == null }">
 	<p>Please Sign up or Log in</p>
 	<ul class="navbar-nav">

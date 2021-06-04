@@ -7,48 +7,51 @@
 	
 	<div class="card-body">
 
-		<%-- will select the form we use, update or insert --%>
-		<c:if test="${ library != null }">
-			<form action="update" method="post">
-		</c:if>
 
-		<c:if test="${ library == null }">
-			<form action="insert" method="post">
-		</c:if>
+		<form action="insert" method="post">
+
 				
 				
 		<%-- hidden input we can use to pass in a value we want --%>
-		<c:if test="${library != null}">
-			<input type="hidden" name="id" value="<c:out value='${product.id}' />" />
+		<c:if test="${patron != null}">
+			<input type="hidden" name="id" value="<c:out value='${patron.id}' />" />
 		</c:if>
 				
 		<!-- item field -->
 		<fieldset class="form-group">
 					
-			<label>Item</label>
-			<input type="text" value="<c:out value='${ product.item }'/>" 
-				class="form-control" name="item" required>
+			<label>First Name</label>
+			<input type="text" value="<c:out value='${ patron.first_name }'/>" 
+				class="form-control" name="first_name" required>
+					
+		</fieldset>
+		
+		<fieldset class="form-group">
+					
+			<label>Last Name</label>
+			<input type="text" value="<c:out value='${ patron.last_name }'/>" 
+				class="form-control" name="last_name" required>
+					
+		</fieldset>
+				
+				
+		<fieldset class="form-group">
+					
+			<label>Username</label>
+			<input type="text" value="<c:out value='${ patron.username }'/>" 
+				class="form-control" name="username" required>
 					
 		</fieldset>
 				
 		<fieldset class="form-group">
 					
-			<label>Quantity</label>
-			<input type="number" value="<c:out value='${ product.qty }'/>" 
-				class="form-control" name="qty" required>
+			<label>Password</label>
+			<input type="password" value="<c:out value='${ patron.password }'/>" 
+				class="form-control" name="password" required>
 					
 		</fieldset>
-				
-		<fieldset class="form-group">
-					
-			<label>Description</label>
-			<input type="text" value="<c:out value='${ product.description }'/>" 
-				class="form-control" name="description" required>
-					
-		</fieldset>
-				
 
-		<button type="submit" class="btn btn-success">Save</button>
+		<button type="submit" class="btn btn-success">Sign Up</button>
 
 		</form>
 
