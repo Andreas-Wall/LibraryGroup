@@ -11,7 +11,6 @@
 		<thead>
 			<tr>
 				<th>#</th>
-
 				<th>Title</th>
 				<th>Description</th>
 				<th>Rented</th>
@@ -50,8 +49,7 @@
 					</a>
 				</td>
 
-				<br>
-
+				<tr><td><br></td></tr>
 			
 			</c:forEach>
 		

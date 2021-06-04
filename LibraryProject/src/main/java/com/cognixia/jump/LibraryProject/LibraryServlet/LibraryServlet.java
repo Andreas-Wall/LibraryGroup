@@ -48,8 +48,6 @@ public class LibraryServlet extends HttpServlet {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
 			}
 			break;
 		case "/edit":
@@ -99,7 +97,7 @@ public class LibraryServlet extends HttpServlet {
 		List<Library> allBooks = libraryDAO.getAllBooks();
 		System.out.println("called, allBooks = " + allBooks);
 		request.setAttribute("allBooks", allBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
 		dispatcher.forward(request, response);
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) 
@@ -152,7 +150,9 @@ public class LibraryServlet extends HttpServlet {
 	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
+
 		libraryDAO.checkOutBook(isbn);
+
 		response.sendRedirect("listBooks");
 	}
 	
