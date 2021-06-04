@@ -10,17 +10,17 @@
 					in all fields.</p>
 			</div>
 		</div>
-â€‹		<form action="LibraryServlet" method="GET">
-	â€‹		<div class="form-group">
+		<form action="LibraryServlet" method="GET">
+			<div class="form-group">
 				<label for="user-email">Email</label>
-				<input type="email" id="user-email" name="user-email" class="form-control"/>
+				<input type="text" id="username" name="username" class="form-control"/>
 			</div>			
 			<div class="form-group">
 				<label for="pw">Password</label>
 				<input type="password" id="pw" name="pw" class="form-control"/>
 			</div>			
 			<input type="submit" value="Login" class="btn btn-primary"/>
-â€‹		</form>
+€‹		</form>
 	</div>
 
 <%@ include file= "footer.jsp" %>
