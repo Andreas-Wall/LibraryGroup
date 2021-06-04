@@ -14,8 +14,7 @@
 <body>
 
 
-
-<c:if test = "${ patron == null }" > 
+<c:if test = "${ patron != null }" > 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  		<a class="navbar-brand" href="<%= request.getContextPath() %>/">User HomePage</a>
@@ -27,18 +26,21 @@
 			    <ul class="navbar-nav">
 			    
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">Checkout</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/bookCheckout">Checkout</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Return</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/returnBooks">Return</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Checked Out Books</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/checkedOut">Checked Out Books</a>
 			      	</li>
 			      	<li class="nav-item">
 			        	<a class="nav-link" href="<%= request.getContextPath() %>/listBooks">List of Books</a>
 			      	</li>
-			      	
+			      	<li class="nav-item">
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/editUserInfo">Edit User Info</a>
+			      	</li>
+
 			      	
 			    </ul>
 			    
@@ -60,16 +62,16 @@
 			    <ul class="navbar-nav">
 			    
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">Add Book</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/addBook">Add Book</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Edit Book</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/editBook">Edit Book</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">View Users</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/listUsers">View Users</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Update Librarian Info</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/editLibrarianInfo">Update Librarian Info</a>
 			      	</li>
 			      	
 			    </ul>
@@ -79,7 +81,6 @@
 	</header>
 	
 </c:if>
-
 <c:if test = "${ patron == null && librarian == null }">
 	<p>Please Sign up or Log in</p>
 	<ul class="navbar-nav">
@@ -88,4 +89,3 @@
 		</li>
 	</ul>
 </c:if>
-
