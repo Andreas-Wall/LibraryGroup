@@ -92,7 +92,6 @@ public class LibraryServlet extends HttpServlet {
 	}
 	
 
-	
 	//Books
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -114,11 +113,10 @@ public class LibraryServlet extends HttpServlet {
 		System.out.println("called, checkedOutBooks = " + checkedOutBooks);
 		request.setAttribute("checkedOutBooks", checkedOutBooks);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
-    dispatcher.forward(request, response);
-  }
-	
-  
-  
+
+		dispatcher.forward(request, response);
+	}
+
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 			
@@ -130,9 +128,8 @@ public class LibraryServlet extends HttpServlet {
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 			
 		libraryDAO.addBook(book);
-		
-		response.sendRedirect("listBooks");		
 
+		response.sendRedirect("listBooks");		
 	}
 	
   
@@ -152,7 +149,9 @@ public class LibraryServlet extends HttpServlet {
 	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
-		libraryDAO.checkOutBook(isbn);
+
+		libraryDAO.bookCheckout(isbn);
+
 		response.sendRedirect("listBooks");
 	}
 	
@@ -186,7 +185,6 @@ public class LibraryServlet extends HttpServlet {
 		Library user = new Library(firstName, lastName, username, password);
 			
 		libraryDAO.addUser(user);
-			
 		response.sendRedirect("listBooks");		
 	}
 	
