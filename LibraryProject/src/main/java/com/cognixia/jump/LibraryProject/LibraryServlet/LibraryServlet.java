@@ -1,95 +1,86 @@
 package com.cognixia.jump.LibraryProject.LibraryServlet;
-
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.cognixia.jump.LibraryProject.LibraryDAO.LibraryDAO;
 import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
-
 import com.cognixia.jump.LibraryProject.model.Library;
-
-@WebServlet("/")
+@WebServlet(“/”)
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private LibraryDAO libraryDAO;
-
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		libraryDAO = new LibraryDAO();
 	}
-
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String action  = request.getServletPath();
+		String action = request.getServletPath();
 		
 		switch(action) {
-		case "/listBooks":
+		//Patron
+		case “/listBooks”:
 			listBooks(request, response);
 			break;
-		case "/insert":
-			try {
-				addNewBook(request, response);
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		//Librarian
+		case “/addBook”:
+			addNewBook(request, response);
 			break;
-		case "/edit":
+		//Librarian
+		case “/editBook”:
 			editBookInfo(request, response);
 			break;
-		case "/bookCheckout":
+		//Patron
+		case “/bookCheckout”:
 			bookCheckout(request, response);
 			break;
-		case "/checkedOut":
+		//Patron
+		case “/checkedOut”:
 			checkedOutBooks(request, response);
 			break;
-		case "/login":
-			login(request, response);
-			break;
-		case "/returnBooks":
+		//Patron
+		case “/returnBooks”:
 			returnBooks(request, response);
 			break;
-		case "/listUsers":
+		//Librarian	
+		case “/listUsers”:
 			listUsers(request, response);
 			break;
-		case "/addUser":
+		//Patron
+		case “/addUser”:
 			addNewUser(request, response);
 			break;
-		case "/editUserInfo":
+		//Patron
+		case “/editUserInfo”:
 			editUserInfo(request, response);
 			break;
-		case "/editLibrarianInfo":
+		//Librarian
+		case “/editLibrarianInfo”:
 			editLibrarianInfo(request, response);
 			break;
+    case “/login”:
+			login(request, response);
+			break;
 		default:
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(“index.jsp”);
 			break;
 		}
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
-
 	
 	//Books
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
@@ -108,66 +99,62 @@ public class LibraryServlet extends HttpServlet {
 	
 	private void checkedOutBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		List<Library> checkedOutBooks = libraryDAO.getCheckOutBooks();
-		System.out.println("called, checkedOutBooks = " + checkedOutBooks);
-		request.setAttribute("checkedOutBooks", checkedOutBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
-    dispatcher.forward(request, response);
-  }
+		List<Library> checkedOutBooks = libraryDAO.getAllCheckedOutBooks();
+		System.out.println(“called, checkedOutBooks = ” + checkedOutBooks);
+		request.setAttribute(“checkedOutBooks”, checkedOutBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(“patron.jsp”);
+		dispatcher.forward(request, response);
+	}
 	
-  
-  
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			
-		String isbn = request.getParameter("isbn");
-		String title = request.getParameter("title");
-		String descr = request.getParameter("descr");
-		boolean rented = Boolean.parseBoolean(request.getParameter("rented")) ;
-		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
+		String isbn = request.getParameter(“isbn”);
+		String title = request.getParameter(“title”);
+		String descr = request.getParameter(“descr”);
+		boolean rented = Boolean.parseBoolean(request.getParameter(“rented”)) ;
+		Date added_to_library = Date.valueOf(request.getParameter(“added_to_library”));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 			
 		libraryDAO.addBook(book);
-		
-		response.sendRedirect("listBooks");		
-
+			
+		response.sendRedirect(“listBooks”);		
 	}
 	
-  
 	private void editBookInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String isbn = request.getParameter("isbn");
-		String title = request.getParameter("title");
-		String descr = request.getParameter("descr");
-		boolean rented = Boolean.parseBoolean(request.getParameter("rented")) ;
-		//Date added_to_library = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("added_to_library"));
-		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
+		String isbn = request.getParameter(“isbn”);
+		String title = request.getParameter(“title”);
+		String descr = request.getParameter(“descr”);
+		boolean rented = Boolean.parseBoolean(request.getParameter(“rented”)) ;
+		Date added_to_library = Date.valueOf(request.getParameter(“added_to_library”));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
-		libraryDAO.updateBook(book);
-		response.sendRedirect("listBooks");
+		libraryDAO.editBookInfo(book);
+		response.sendRedirect(“listBooks”);
 	}
-
 	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		String isbn = request.getParameter("isbn");
-
-		libraryDAO.checkOutBook(isbn);
-
-		response.sendRedirect("listBooks");
+		String isbn = request.getParameter(“isbn”);
+		libraryDAO.bookCheckout(isbn);
+		response.sendRedirect(“listBooks”);
 	}
 	
 	private void returnBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		String isbn = request.getParameter("isbn");
-		Date retuned = Date.valueOf(request.getParameter("retuned"));
-		// need to fix date problem libraryDAO.checkInBook(isbn, retuned);
-		response.sendRedirect("listBooks");
+		String isbn = request.getParameter(“isbn”);
+    Date returned = Date.valueOf(request.getParameter(“returned”));
+		libraryDAO.returnBooks(isbn);
+		response.sendRedirect(“listBooks”);
 	}
 	
 	
 	//User & Librarian
 
 	
+  private void login(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher(“login.jsp”);
+		dispatcher.forward(request, response);
+	}
 	private void listUsers(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		List<Library> allPatrons = libraryDAO.getAllPatrons();
@@ -179,38 +166,35 @@ public class LibraryServlet extends HttpServlet {
 	
 	private void addNewUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			
-		String firstName = request.getParameter("first_name");
-		String lastName = request.getParameter("last_name");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String firstName = request.getParameter(“first_name”);
+		String lastName = request.getParameter(“last_name”);
+		String username = request.getParameter(“username”);
+		String password = request.getParameter(“password”);
 		Library user = new Library(firstName, lastName, username, password);
-			
 		libraryDAO.addUser(user);
-			
-		response.sendRedirect("listBooks");		
+		response.sendRedirect(“listBooks”);		
 	}
 	
 	private void editUserInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String firstName = request.getParameter("first_name");
-		String lastName = request.getParameter("last_name");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		
-		Library user = new Library(firstName, lastName, username, password);
-		libraryDAO.patronLoginUpdate(user);
-		response.sendRedirect("listBooks");
+		int patronId = Integer.parseInt(request.getParameter(“patron_ID”));
+		String firstName = request.getParameter(“first_name”);
+		String lastName = request.getParameter(“last_name”);
+		String username = request.getParameter(“username”);
+		String password = request.getParameter(“password”);
+		Library user = new Library(patronId,firstName, lastName, username, password);
+		libraryDAO.editUser(user);
+		response.sendRedirect(“listBooks”);
 	}
-  
-  private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
+	
+	private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int librarianId = Integer.parseInt(request.getParameter("librarian_id"));
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		Library librarian = new Library(username, password);
-		libraryDAO.librarianLoginUpdate(librarian);
-		response.sendRedirect("listUsers");
+		int librarianId = Integer.parseInt(request.getParameter(“librarian_id”));
+		String username = request.getParameter(“username”);
+		String password = request.getParameter(“password”);
+		Library librarian = new Library(librarianId, username, password);
+		libraryDAO.editLibrarian(librarianId);
+		response.sendRedirect(“listUsers”);
 	}
 	
 	
@@ -222,6 +206,4 @@ public class LibraryServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-
 }
