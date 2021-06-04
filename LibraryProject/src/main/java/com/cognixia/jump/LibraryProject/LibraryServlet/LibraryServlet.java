@@ -22,6 +22,10 @@ import com.cognixia.jump.LibraryProject.connection.ConnectionManager;
 import com.cognixia.jump.LibraryProject.model.Library;
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 @WebServlet("/")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -68,8 +72,11 @@ public class LibraryServlet extends HttpServlet {
 			break;
 		case "/login":
 			login(request, response);
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 			break;
+=======
+>>>>>>> Stashed changes
 //		case "/returnBooks":
 //			returnBooks(request, response);
 //			break;
@@ -109,6 +116,15 @@ public class LibraryServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) 
+<<<<<<< Updated upstream
+=======
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void checkedOutBooks(HttpServletRequest request, HttpServletResponse response) 
+>>>>>>> Stashed changes
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
@@ -151,7 +167,10 @@ public class LibraryServlet extends HttpServlet {
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 		libraryDAO.updateBook(book);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 		response.sendRedirect("list");
 	}
 
@@ -159,6 +178,9 @@ public class LibraryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
 		libraryDAO.checkOutBook(isbn);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		response.sendRedirect("list");
 	}
