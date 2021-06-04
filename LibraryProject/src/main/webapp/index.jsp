@@ -1,4 +1,4 @@
-<%@ include file= "userHeader.jsp" %>
+<%@ include file= "header.jsp" %>
 
 <div class="container">
 	<h1> Welcome To Our Product Store!!</h1>

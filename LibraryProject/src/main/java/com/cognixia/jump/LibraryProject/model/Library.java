@@ -29,12 +29,20 @@ public class Library
 		this.account_frozen = account_frozen;
 	}
 	
+	//constructor for PatronUpdate
+	public Library( String first_name, String last_name, String username, String password) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.username = username;
+		this.password = password;
+	}
+	
 	//Constructor for Librarian
-	public Library(String username, String password, int librarian_id) {
+	public Library(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.librarian_id = librarian_id;
 	}
 	
 	//Constructor for Book_Checkout
