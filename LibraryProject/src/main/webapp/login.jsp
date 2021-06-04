@@ -10,15 +10,31 @@
 					in all fields.</p>
 			</div>
 		</div>
+<<<<<<< Updated upstream
 		<form action="LibraryServlet" method="GET">
 			<div class="form-group">
 				<label for="user-email">Email</label>
 				<input type="text" id="username" name="username" class="form-control"/>
 			</div>			
+=======
+		<fieldset>
+			<legend>User Type</legend>
+			<input type="radio" id="patron" name="user-type" value="patron"> Patron<br>
+			<input type="radio" id="librarian" name="user-type" value="librarian"> Librarian<br>
+		</fieldset>
+		<br>
+â€‹		<form action="LibraryServlet" method="GET">
+	â€‹		<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" class="form-control"/>
+			</div>
+			<br>		
+>>>>>>> Stashed changes
 			<div class="form-group">
 				<label for="pw">Password</label>
 				<input type="password" id="pw" name="pw" class="form-control"/>
-			</div>			
+			</div>
+			<br>		
 			<input type="submit" value="Login" class="btn btn-primary"/>
 €‹		</form>
 	</div>
