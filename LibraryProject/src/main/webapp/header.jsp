@@ -14,7 +14,8 @@
 <body>
 
 
-<c:if test = "${ patron != null }" > 
+
+<c:if test = "${ patron == null }" > 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  		<a class="navbar-brand" href="<%= request.getContextPath() %>/">User HomePage</a>
@@ -35,7 +36,7 @@
 			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Checked Out Books</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">List of Books</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/listBooks">List of Books</a>
 			      	</li>
 			      	
 			      	
@@ -78,10 +79,13 @@
 	</header>
 	
 </c:if>
-<c:if test = "${ patron == null }">
+
+<c:if test = "${ patron == null && librarian == null }">
 	<p>Please Sign up or Log in</p>
+	<ul class="navbar-nav">
+		<li class="nav-item">
+			<a class="nav-link" href="<%= request.getContextPath() %>/login">Login</a>
+		</li>
+	</ul>
 </c:if>
 
-<c:if test = "${ librarian == null }">
-	<p>Please Sign up or Log in</p>
-</c:if>
