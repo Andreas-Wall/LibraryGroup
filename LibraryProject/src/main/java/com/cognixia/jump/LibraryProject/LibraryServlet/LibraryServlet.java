@@ -94,7 +94,6 @@ public class LibraryServlet extends HttpServlet {
 	}
 	
 
-	
 	//Books
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -114,15 +113,6 @@ public class LibraryServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	private void checkedOutBooks(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		List<Library> allBooks = libraryDAO.getAllBooks();
-		System.out.println("called, allBooks = " + allBooks);
-		request.setAttribute("allBooks", allBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
-		dispatcher.forward(request, response);
-	}
-	
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 			
@@ -134,10 +124,7 @@ public class LibraryServlet extends HttpServlet {
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 			
 		libraryDAO.addBook(book);
-			
-
 		response.sendRedirect("listBooks");		
-
 	}
 	
 	private void editBookInfo (HttpServletRequest request, HttpServletResponse response)
@@ -150,7 +137,6 @@ public class LibraryServlet extends HttpServlet {
 		Date added_to_library = Date.valueOf(request.getParameter("added_to_library"));
 		Library book = new Library(isbn, title, descr, rented, added_to_library);
 		libraryDAO.editBookInfo(book);
-
 		response.sendRedirect("listBooks");
 
 	}
@@ -159,7 +145,6 @@ public class LibraryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String isbn = request.getParameter("isbn");
 		libraryDAO.bookCheckout(isbn);
-
 		response.sendRedirect("listBooks");
 
 	}
@@ -193,7 +178,6 @@ public class LibraryServlet extends HttpServlet {
 		Library user = new Library(firstName, lastName, username, password);
 			
 		libraryDAO.addUser(user);
-			
 		response.sendRedirect("listBooks");		
 	}
 	
