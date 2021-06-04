@@ -30,9 +30,20 @@ public class Library
 		this.account_frozen = account_frozen;
 	}
 	
+	//Constructor for addUser
+		public Library(String first_name, String last_name, String username , String password) {
+			super();
+			this.first_name = first_name;
+			this.last_name = last_name;
+			this.username = username;
+			this.password = password;
+		}
+	
+	
 	//constructor for PatronUpdate
-	public Library( String first_name, String last_name, String username, String password) {
+	public Library( int patron_id, String first_name, String last_name, String username, String password) {
 		super();
+		this.patron_id = patron_id;
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.username = username;
@@ -42,6 +53,14 @@ public class Library
 	//Constructor for Librarian
 	public Library(String username, String password) {
 		super();
+		this.username = username;
+		this.password = password;
+	}
+	
+	//Constructor for LibrarianUpdate
+	public Library(int librarian_id, String username, String password) {
+		super();
+		this.librarian_id = librarian_id;
 		this.username = username;
 		this.password = password;
 	}
