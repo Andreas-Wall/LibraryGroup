@@ -86,5 +86,8 @@
 		<li class="nav-item">
 			<a class="nav-link" href="<%= request.getContextPath() %>/login">Login</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="<%= request.getContextPath() %>/signup.jsp">Sign Up</a>
+		</li>
 	</ul>
 </c:if>
