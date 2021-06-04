@@ -2,10 +2,10 @@
 
 <div class="container">
 
-	<h1>Book Checkout</h1>
+	<h1>List of Checked Out Books</h1>
 	<br>
 	<br>
-	
+
 	<table class="table table-striped">
 		
 		<thead>
@@ -13,15 +13,13 @@
 				<th>ISBN Number</th>
 				<th>Title</th>
 				<th>Description</th>
-				<th>Rented</th>
-				<th>Added to Library</th>
-				<th>Action</th>
+				<th>Added_to_library</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			
-			<c:forEach var="book" items="${ getAllBooks }">
+
+			<c:forEach var="book" items="${ getCheckedOutBooks }">
 			
 				<td>
 					<c:out value="${ book.isbn }" />
@@ -33,16 +31,11 @@
 					<c:out value="${ book.description }" />
 				</td>
 				<td>
-					<c:out value="${ book.rented }" />
-				</td>
-				<td>
 					<c:out value="${ book.added_to_library }" />
 				</td>
-				<td>
-					<a href="edit?id=<c:out value='${ book.checkout_id }' />">
-						<button class="btn btn-primary">Checkout</button>
-					</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				</td>
+
+				<br>
+
 			
 			</c:forEach>
 		

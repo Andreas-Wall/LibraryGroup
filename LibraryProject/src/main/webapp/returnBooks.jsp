@@ -2,7 +2,7 @@
 
 <div class="container">
 
-	<h1>Book Checkout</h1>
+	<h1>Book Return</h1>
 	<br>
 	<br>
 	
@@ -39,8 +39,8 @@
 					<c:out value="${ book.added_to_library }" />
 				</td>
 				<td>
-					<a href="edit?id=<c:out value='${ book.checkout_id }' />">
-						<button class="btn btn-primary">Checkout</button>
+					<a href="edit?id=<c:out value='${ book.return_id }' />">
+						<button class="btn btn-primary">Return</button>
 					</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				</td>
 			
