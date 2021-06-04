@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
@@ -21,6 +22,8 @@ public class LibraryDAO {
 	private static final String PATRON_LOGIN_UPDATE="update patron set first_name = ?, last_name = ?, username = ?, "
 			+ "password = ?, where account_id = ?";
 	private static final String LIBRARIAN_LOGIN_UPDATE="update librarian set username = ?, password = ?, where librarian_id = ?";
+	//used to allow user to sign up
+	private static final String PATRON_SIGNUP="insert into patron (first_name, last_name, username, password) values (?,?,?,?)";
 	//used by librarian to see what account need to be unfrozen.
 	private static final String PATRON_LIST = "select patron_id, first_name, last_name, account_frozen from patron order by account_frozen desc";
 	private static final String PATRON_UNFREEZE="update patron set account_frozen = 1 where account_id = ?";
@@ -100,6 +103,19 @@ public class LibraryDAO {
 		} catch (SQLException e) {e.printStackTrace();}//end try/catch
 		return false;}
 	//end librarianLoginUpdate
+	//will add new user to the library. we need customers 
+	public boolean addUser(Library Library) {
+		try(PreparedStatement pstmt = conn.prepareStatement(PATRON_SIGNUP)) {
+			pstmt.setString(1, Library.getFirst_name());
+			pstmt.setString(2, Library.getLast_name());
+			pstmt.setString(3, Library.getUsername());
+			pstmt.setString(4, Library.getPassword());
+			// at least one row added
+			if(pstmt.executeUpdate() > 0) {
+				return true;}
+		} catch(SQLException e) {e.printStackTrace();}
+		return false;
+	}//end addBook
 	//methods used to look at patrons and unfreeze them.
 	//will list all the patrons to the librarian to check which accounts need to be unfrozen.
 	public List<Library> getAllPatrons() {

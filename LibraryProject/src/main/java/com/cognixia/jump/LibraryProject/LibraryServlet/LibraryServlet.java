@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +25,9 @@ import com.cognixia.jump.LibraryProject.model.Library;
 <<<<<<< Updated upstream
 =======
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 @WebServlet("/")
 public class LibraryServlet extends HttpServlet {
@@ -119,6 +122,7 @@ public class LibraryServlet extends HttpServlet {
 <<<<<<< Updated upstream
 =======
 			throws ServletException, IOException {
+<<<<<<< Updated upstream
 		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -129,6 +133,15 @@ public class LibraryServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 	}
+=======
+		List<Library> checkedOutBooks = libraryDAO.getCheckOutBooks();
+		System.out.println("called, checkedOutBooks = " + checkedOutBooks);
+		request.setAttribute("checkedOutBooks", checkedOutBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("patron.jsp");
+		dispatcher.forward(request, response);
+	}
+
+>>>>>>> Stashed changes
 	
 	//insert
 	private void addNewBook(HttpServletRequest request, HttpServletResponse response)
@@ -168,10 +181,16 @@ public class LibraryServlet extends HttpServlet {
 		libraryDAO.updateBook(book);
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 =======
 >>>>>>> Stashed changes
 		response.sendRedirect("list");
+=======
+
+		response.sendRedirect("listBooks");
+
+>>>>>>> Stashed changes
 	}
 
 	private void bookCheckout(HttpServletRequest request, HttpServletResponse response) 
@@ -179,12 +198,75 @@ public class LibraryServlet extends HttpServlet {
 		String isbn = request.getParameter("isbn");
 		libraryDAO.checkOutBook(isbn);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 		response.sendRedirect("list");
 	}
 	
+=======
+
+		response.sendRedirect("listBooks");
+
+	}
+	
+	private void returnBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String isbn = request.getParameter("isbn");
+		Date retuned = Date.valueOf(request.getParameter("retuned"));
+		// need to fix date problem libraryDAO.checkInBook(isbn, retuned);
+		response.sendRedirect("listBooks");
+	}
+	
+	
+	//User & Librarian
+	
+	private void listUsers(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		List<Library> allUsers = libraryDAO.getAllPatrons();
+		System.out.println("called, allUsers = " + allUsers);
+		request.setAttribute("allUsers", allUsers);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("librarian.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void addNewUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		Library user = new Library(firstName, lastName, username, password);
+			
+		libraryDAO.addUser(user);
+			
+		response.sendRedirect("listBooks");		
+	}
+	
+	private void editUserInfo (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String firstName = request.getParameter("first_name");
+		String lastName = request.getParameter("last_name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		Library user = new Library(firstName, lastName, username, password);
+		libraryDAO.patronLoginUpdate(user);
+		response.sendRedirect("listBooks");
+	}
+	
+	private void editLibrarianInfo (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int librarianId = Integer.parseInt(request.getParameter("librarian_id"));
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		Library librarian = new Library(username, password);
+		libraryDAO.librarianLoginUpdate(librarian);
+		response.sendRedirect("listUsers");
+	}
+>>>>>>> Stashed changes
 	
 	
 	public void destroy() {
