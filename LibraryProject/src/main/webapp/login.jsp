@@ -9,14 +9,14 @@
 				<p class="lead">Welcome! Please login below. Make sure to fill
 					in all fields.</p>
 			</div>
-		</div>
-		<fieldset>
-			<legend>User Type</legend>
-			<input type="radio" id="patron" name="user-type" value="patron"> Patron<br>
-			<input type="radio" id="librarian" name="user-type" value="librarian"> Librarian<br>
-		</fieldset>
-		<br>
+		</div>				
 ​		<form action="LibraryServlet" method="GET">
+			<fieldset>
+			<legend>User Type</legend>
+				<input type="radio" id="patron" name="user-type" value="patron"> Patron<br>
+				<input type="radio" id="librarian" name="user-type" value="librarian"> Librarian<br>
+			</fieldset>
+			<br>
 	​		<div class="form-group">
 				<label for="username">Username</label>
 				<input type="text" id="username" name="username" class="form-control"/>

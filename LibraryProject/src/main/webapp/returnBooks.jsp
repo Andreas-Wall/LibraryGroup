@@ -30,7 +30,7 @@
 					<c:out value="${ book.title }" />
 				</td>
 				<td>
-					<c:out value="${ book.description }" />
+					<c:out value="${ book.descr }" />
 				</td>
 				<td>
 					<c:out value="${ book.rented }" />

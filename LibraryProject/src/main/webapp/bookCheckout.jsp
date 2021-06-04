@@ -21,7 +21,7 @@
 		
 		<tbody>
 			
-			<c:forEach var="book" items="${ getAllBooks }">
+			<c:forEach var="book" items="${ getCheckOutBooks }">
 			
 				<td>
 					<c:out value="${ book.isbn }" />

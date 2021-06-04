@@ -13,13 +13,14 @@
 				<th>ISBN Number</th>
 				<th>Title</th>
 				<th>Description</th>
+				<th>Rented</th>
 				<th>Added_to_library</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 
-			<c:forEach var="book" items="${ getCheckedOutBooks }">
+			<c:forEach var="book" items="${ checkOutBooks }">
 			
 				<td>
 					<c:out value="${ book.isbn }" />
@@ -28,7 +29,10 @@
 					<c:out value="${ book.title }" />
 				</td>
 				<td>
-					<c:out value="${ book.description }" />
+					<c:out value="${ book.descr }" />
+				</td>
+				<td>
+					<c:out value="${ book.rented }" />
 				</td>
 				<td>
 					<c:out value="${ book.added_to_library }" />
