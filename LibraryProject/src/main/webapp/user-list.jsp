@@ -2,7 +2,7 @@
 
 <div class="container">
 
-	<h1>User List:</h1>
+	<h1>User List</h1>
 	<br>
 	<br>
 	
@@ -15,15 +15,17 @@
 				<th>Last Name</th>
 				<th>Username</th>
 				<th>Frozen</th>
+				
+				<th>Action</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 			
-			<c:forEach var="patron" items="${getAllPatrons}">
+			<c:forEach var="patron" items="${allPatrons}">
 			
 				<td>
-					<c:out value="${ patron.patron_ID }" />
+					<c:out value="${ patron.patron_id }" />
 				</td>
 				<td>
 					<c:out value="${ patron.first_name }" />
@@ -38,13 +40,12 @@
 					<c:out value="${ patron.account_frozen }" />
 				</td>
 				<td>
-					<a href="edit?id=<c:out value='${ user.id }' />">
+					<a href="edit?id=<c:out value='${ patron.patron_id }' />">
 						<button class="btn btn-primary">Approve</button>
-					</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="delete?id=<c:out value='${ user.id }' />">
-						<button class="btn btn-danger">Decline</button>
 					</a>
 				</td>
+			
+				<tr><td><br></td></tr>
 			
 			</c:forEach>
 		

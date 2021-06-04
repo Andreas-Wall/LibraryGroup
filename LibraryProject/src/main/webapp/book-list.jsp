@@ -11,7 +11,6 @@
 		<thead>
 			<tr>
 				<th>#</th>
-
 				<th>Title</th>
 				<th>Description</th>
 				<th>Rented</th>
@@ -21,7 +20,7 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody style="background:cream;">
 
 			<c:forEach var="Book" items="${allBooks}">
 			
@@ -39,19 +38,24 @@
 				</td>
 				<td>
 					<c:out value="${ Book.added_to_library }" />
-
 				</td>
 				<td>
-					<a href="edit?id=<c:out value='${ product.id }' />">
+				<c:if test = "${ librarian == null }" >
+					<a href="edit?id=<c:out value='${ Book.isbn }' />">
 						<button class="btn btn-primary">Edit</button>
 					</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="delete?id=<c:out value='${ product.id }' />">
+					<a href="delete?id=<c:out value='${ Book.isbn }' />">
 						<button class="btn btn-danger">Delete</button>
 					</a>
+				</c:if>
+				<c:if test = "${ patron != null }" >
+					<a href="edit?id=<c:out value='${ Book.isbn }' />">
+						<button class="btn btn-primary">Checkout</button>
+					</a>
+				</c:if>
 				</td>
 
-				<br>
-
+				<tr><td><br></td></tr>
 			
 			</c:forEach>
 		

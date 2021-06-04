@@ -86,9 +86,14 @@ public class LibraryServlet extends HttpServlet {
 	private void listBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		List<Library> allBooks = libraryDAO.getAllBooks();
-		System.out.println(“called, allBooks = ” + allBooks);
-		request.setAttribute(“allBooks”, allBooks);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(“patron.jsp”);
+		System.out.println("called, allBooks = " + allBooks);
+		request.setAttribute("allBooks", allBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		dispatcher.forward(request, response);
+	}
+	private void login(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		dispatcher.forward(request, response);
 	}
 	
@@ -143,6 +148,7 @@ public class LibraryServlet extends HttpServlet {
 	
 	
 	//User & Librarian
+
 	
   private void login(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -151,10 +157,10 @@ public class LibraryServlet extends HttpServlet {
 	}
 	private void listUsers(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		List<Library> allUsers = libraryDAO.getAllUsers();
-		System.out.println(“called, allUsers = ” + allUsers);
-		request.setAttribute(“allUsers”, allUsers);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(“librarian.jsp”);
+		List<Library> allPatrons = libraryDAO.getAllPatrons();
+		System.out.println("called, allUsers = " + allPatrons);
+		request.setAttribute("allPatrons", allPatrons);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
 		dispatcher.forward(request, response);
 	}
 	
