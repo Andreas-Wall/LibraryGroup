@@ -8,10 +8,9 @@
 	<div class="card-body">
 
 
-		<form action="insert" method="post">
+		<form action="addUser" method="post">
 
-				
-				
+	
 		<%-- hidden input we can use to pass in a value we want --%>
 		<c:if test="${patron != null}">
 			<input type="hidden" name="id" value="<c:out value='${patron.id}' />" />
