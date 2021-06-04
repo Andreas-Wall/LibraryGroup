@@ -25,7 +25,7 @@ public class LibraryDAO {
 	//used to allow user to sign up
 	private static final String PATRON_SIGNUP="insert into patron (first_name, last_name, username, password) values (?,?,?,?)";
 	//used by librarian to see what account need to be unfrozen.
-	private static final String PATRON_LIST = "select patron_id, first_name, last_name, account_frozen from patron order by account_frozen desc";
+	private static final String PATRON_LIST = "select patron_id, first_name, last_name, username, account_frozen from patron order by account_frozen desc";
 	private static final String PATRON_UNFREEZE="update patron set account_frozen = 1 where account_id = ?";
 	//used for all dml transactions relating to the books
 	private static final String SELECT_BOOKS = "select * from book";
@@ -126,8 +126,11 @@ public class LibraryDAO {
 				int patron_id = rs.getInt("patron_id");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
+				String username = rs.getString("username");
 				boolean account_frozen = rs.getBoolean("account_frozen");
-				allPatrons.add(new Library(patron_id, first_name, last_name, account_frozen));}//end while
+				System.out.println(first_name);
+				allPatrons.add(new Library(patron_id, first_name, last_name, username, account_frozen));
+				System.out.println(allPatrons.toString());}//end while
 		} catch(SQLException e) {e.printStackTrace();}//end try/catch
 		return allPatrons;
 	}//end getAllPatrons

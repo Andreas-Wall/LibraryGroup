@@ -15,7 +15,7 @@
 
 
 
-<c:if test = "${ patron == null }" > 
+<c:if test = "${ patron != null }" > 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  		<a class="navbar-brand" href="<%= request.getContextPath() %>/">User HomePage</a>
@@ -47,7 +47,7 @@
 	</header>
 </c:if>
 
-<c:if test = "${ librarian != null }" >
+<c:if test = "${ librarian == null }" >
 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,15 +63,14 @@
 			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">Add Book</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Edit Book</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/listBooks">Edit Book</a>
 			      	</li>
 			      	<li class="nav-item">
-			        	<a class="nav-link" href="<%= request.getContextPath() %>/list">View Users</a>
+			        	<a class="nav-link" href="<%= request.getContextPath() %>/listUsers">View Users</a>
 			      	</li>
 			      	<li class="nav-item">
 			        	<a class="nav-link" href="<%= request.getContextPath() %>/new">Update Librarian Info</a>
 			      	</li>
-			      	
 			    </ul>
 			    
 	  		</div>

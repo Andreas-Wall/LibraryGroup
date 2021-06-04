@@ -166,13 +166,14 @@ public class LibraryServlet extends HttpServlet {
 	
 	
 	//User & Librarian
+
 	
 	private void listUsers(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		List<Library> allUsers = libraryDAO.getAllPatrons();
-		System.out.println("called, allUsers = " + allUsers);
-		request.setAttribute("allUsers", allUsers);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("librarian.jsp");
+		List<Library> allPatrons = libraryDAO.getAllPatrons();
+		System.out.println("called, allUsers = " + allPatrons);
+		request.setAttribute("allPatrons", allPatrons);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
 		dispatcher.forward(request, response);
 	}
 	
